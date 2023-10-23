@@ -10,8 +10,10 @@
     {% for question in latest_question_list %}
         <li><a href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a></li>    {% endfor %}
     </ul>
+    <p> Checking </p>
 {% else %}
     <p>No polls are available.</p>
+    <p> Checking </p>
 {% endif %}
 </body>
 </html>
