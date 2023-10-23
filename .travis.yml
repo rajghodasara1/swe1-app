@@ -13,7 +13,7 @@ before_script:
   - python manage.py migrate
 
 script:
-  - black --diff --color .
+  - black --check .
   - flake8 .
   - coverage run manage.py test
 
