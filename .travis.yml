@@ -1,0 +1,33 @@
+os: linux
+dist: jammy
+language: python
+
+python:
+  - "3.11"
+
+install:
+  - pip install -r requirements.txt
+
+before_script:
+  - python manage.py migrate
+
+script:
+  - black --check .
+  - flake8 .
+  - coverage run manage.py test
+
+after_success:
+  - curl -sL https://coveralls.io/coveralls-linux.tar.gz | tar -xz && ./coveralls
+
+deploy:
+  provider: elasticbeanstalk
+  access_key_id: $ACCESS_KEY_ID
+  secret_access_key: $SECRET_ACCESS_KEY
+  region: "us-west-2"
+  app: "assignment1_poll"
+  env: "django-env2"
+  bucket_name: $AWS_BUCKET_ID
+  bucket_path: "assignment1_poll/"
+  on:
+    repo: rajghodasara1/swe1-app
+    branch: main
